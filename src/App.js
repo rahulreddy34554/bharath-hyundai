@@ -77,7 +77,7 @@ const InterestForm = () => {
       </div>
 
       <div className='relative w-full min-h-[50vh] mt-14 md:mt-10 md:hidden'>
-        <img src='/mobile-banner.webp' alt='Mobile Banner' className='w-full h-full object-cover' />
+        <img src='https://bharath-hyundai-2-0-git-main-bharath-hyundais-projects.vercel.app/mobile-banner.webp' alt='Mobile Banner' className='w-full h-full object-cover' />
       </div>
 
       <div className='w-full bg-white flex justify-center border md:top-2/3 lg:absolute lg:top-1/2 lg:left-72 lg:transform lg:-translate-x-1/2 lg:-translate-y-1/2 lg:bg-white lg:p-6 lg:rounded-2xl lg:shadow-lg lg:w-[90%] lg:max-w-lg'>
