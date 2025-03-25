@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import OffersCarousel from './OffersCarousel';
+import axios from 'axios';
 import {
   Facebook,
   Twitter,
@@ -33,7 +34,7 @@ const InterestForm = () => {
     e.preventDefault();
     setErrors({});
     setSubmitted(false);
-
+  
     let newErrors = {};
     if (!form.name.trim()) newErrors.name = 'Name is required';
     if (!form.mobile.trim() || !/^\d{10}$/.test(form.mobile))
@@ -41,29 +42,34 @@ const InterestForm = () => {
     if (!form.model) newErrors.model = 'Please select a car model';
     if (form.email && !/\S+@\S+\.\S+/.test(form.email))
       newErrors.email = 'Please enter a valid email address';
-
+  
     setErrors(newErrors);
+    
     if (Object.keys(newErrors).length === 0) {
       try {
-        const response = await fetch('/api/submit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(form),
-        });
-
-        const result = await response.json();
-        if (response.ok) {
+        const response = await axios.post('https://reactjs-bharath.onrender.com/api/submit', form);
+        
+  
+        if (response.status === 200 || response.status === 201) {
+          
+          
           setSubmitted(true);
           setForm({ name: '', mobile: '', email: '', model: '' });
-          navigate('/Thankyou-page');
+  
+          setTimeout(() => {
+            navigate('/thank-you');
+          }, 300);
         } else {
-          alert(`❌ Error: ${result.error}`);
+          console.log("⚠️ Unexpected Response Data:", response.data);
+          alert(`❌ Error: ${response.data?.error || "Unknown error"}`);
         }
       } catch (error) {
-        alert('❌ Server error. Please try again later.');
+        console.error("❌ Submission error:", error);
+        alert(`❌ Server error: ${error.response?.data?.message || error.message}`);
       }
     }
   };
+  
 
   return (
     <>
@@ -435,5 +441,6 @@ function FeaturesSection() {
     </div>
   );
 }
+
 
 
